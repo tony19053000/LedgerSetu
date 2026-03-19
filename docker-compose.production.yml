@@ -1,0 +1,29 @@
+services:
+  app:
+    image: ledgersetu:latest
+    container_name: ledgersetu_app
+    networks:
+      - ledgersetu_network
+    environment:
+      - NODE_ENV=production
+      - BASE_URL=https://ledgersetu.local
+      - SELF_HOSTED_MODE=false
+      - UPLOAD_PATH=/app/data/uploads
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:7331:7331"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100M"
+        max-file: "3"
+
+networks:
+  ledgersetu_network:
+    driver: bridge
