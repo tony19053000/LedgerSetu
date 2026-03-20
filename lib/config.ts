@@ -1,7 +1,7 @@
 import { z } from "zod"
 
 const envSchema = z.object({
-  BASE_URL: z.string().url().default("http://localhost:7331"),
+  BASE_URL: z.string().url().optional(),
   PORT: z.string().default("7331"),
   SELF_HOSTED_MODE: z.enum(["true", "false"]).default("true"),
   OPENAI_API_KEY: z.string().optional(),
@@ -29,7 +29,7 @@ const config = {
     title: "LedgerSetu",
     description: "AI Expense, Invoice, and Tax Intelligence for India",
     version: process.env.npm_package_version || "0.0.1",
-    baseURL: env.BASE_URL || `http://localhost:${env.PORT || "7331"}`,
+    baseURL: env.BASE_URL || `http://0.0.0.0:${env.PORT || "7331"}`,
     supportEmail: "support@ledgersetu.local",
   },
   upload: {
